@@ -13,9 +13,12 @@ st.title("📘 Google Drive Excel Entry via Service Account")
 debug = st.sidebar.checkbox("🔧 Enable debug info")
 
 # Authenticate with service account
-creds = service_account.Credentials.from_service_account_file(
-    "service_account.json",
+import json
+creds_info = json.loads(st.secrets["gcp_credentials"])
+creds = service_account.Credentials.from_service_account_info(
+    creds_info,
     scopes=["https://www.googleapis.com/auth/drive"]
+)
 )
 service = build("drive", "v3", credentials=creds)
 
